@@ -2960,6 +2960,58 @@ h1 {
   color: #f1db85;
 }
 
+.garden-map-section {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 72px 28px 28px;
+}
+
+.garden-map-intro {
+  display: grid;
+  grid-template-columns: .9fr 1.1fr;
+  gap: 48px;
+  align-items: end;
+  margin-bottom: 28px;
+}
+
+.garden-map-intro h2 {
+  margin: 8px 0 0;
+  color: var(--green);
+}
+
+.garden-map-intro p {
+  margin: 0 0 20px;
+  color: var(--muted);
+  line-height: 1.65;
+}
+
+.garden-map-card {
+  margin: 0;
+  padding: 16px;
+  border: 1px solid rgba(35,66,54,.14);
+  border-radius: 20px;
+  background: white;
+  box-shadow: 0 18px 44px rgba(35,66,54,.1);
+}
+
+.garden-map-card a,
+.garden-map-card img {
+  display: block;
+  width: 100%;
+}
+
+.garden-map-card img {
+  height: auto;
+  border-radius: 12px;
+}
+
+.garden-map-card figcaption {
+  padding: 12px 4px 2px;
+  color: var(--muted);
+  font-size: .86rem;
+  text-align: center;
+}
+
 .mulch-callout {
   max-width: 1024px;
   margin: 0 auto 52px;
@@ -3954,6 +4006,20 @@ footer {
 
   .campaign-copy h1 {
     font-size: clamp(3.2rem, 15vw, 5rem);
+  }
+
+  .garden-map-section {
+    padding: 52px 18px 20px;
+  }
+
+  .garden-map-intro {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .garden-map-card {
+    padding: 8px;
+    border-radius: 14px;
   }
 
   .snow-campaign-art,
