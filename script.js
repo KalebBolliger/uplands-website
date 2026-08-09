@@ -34,7 +34,7 @@ document.querySelectorAll("nav").forEach((nav) => {
       "block-parties.html",
       "services.html",
       "garage-sale.html",
-      "garden-campaign.html",
+      "garden.html",
       "halloween.html",
       "picnic.html",
       "snow-removal-fund.html",
