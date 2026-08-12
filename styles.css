@@ -3803,7 +3803,7 @@ h1 {
   flex-direction: column;
   gap: 16px;
   width: min(92vw, 1000px);
-  max-height: 90vh;
+  height: min(90vh, 920px);
 }
 
 .lightbox-close {
@@ -3829,9 +3829,15 @@ h1 {
 
 .lightbox-image-wrap {
   position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1 1 auto;
+  min-height: 0;
   overflow: hidden;
   border-radius: 12px;
   background: var(--green-dark);
+  padding: 28px 20px;
   touch-action: none;
   cursor: zoom-in;
 }
@@ -3846,8 +3852,10 @@ h1 {
 
 .lightbox-image {
   display: block;
-  width: 100%;
-  max-height: 65vh;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
   object-fit: contain;
   user-select: none;
   transform-origin: center center;
@@ -3860,6 +3868,7 @@ h1 {
   justify-content: space-between;
   gap: 16px;
   flex-wrap: wrap;
+  flex: none;
   padding: 16px 20px;
   border-radius: 12px;
   background: var(--card);
