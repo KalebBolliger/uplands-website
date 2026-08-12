@@ -107,3 +107,182 @@ document.querySelectorAll("[data-calendar-shell]").forEach((shell) => {
 
   shell.replaceChildren(frame);
 });
+
+// Gallery image lightbox with scroll/pinch zoom
+(() => {
+  const links = document.querySelectorAll("a.gallery-item");
+  if (!links.length) return;
+
+  const minScale = 1;
+  const maxScale = 4;
+
+  const lightbox = document.createElement("div");
+  lightbox.className = "lightbox";
+  lightbox.hidden = true;
+  lightbox.innerHTML = `
+    <div class="lightbox-backdrop"></div>
+    <div class="lightbox-content" role="dialog" aria-modal="true" aria-label="Photo viewer">
+      <button type="button" class="lightbox-close" aria-label="Close photo viewer">&times;</button>
+      <div class="lightbox-image-wrap">
+        <img class="lightbox-image" alt="" draggable="false">
+      </div>
+      <div class="lightbox-panel">
+        <p class="lightbox-caption"></p>
+        <a class="button button--dark lightbox-fullsize" target="_blank" rel="noopener">View full size</a>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(lightbox);
+
+  const backdrop = lightbox.querySelector(".lightbox-backdrop");
+  const closeButton = lightbox.querySelector(".lightbox-close");
+  const imageWrap = lightbox.querySelector(".lightbox-image-wrap");
+  const image = lightbox.querySelector(".lightbox-image");
+  const caption = lightbox.querySelector(".lightbox-caption");
+  const fullsizeLink = lightbox.querySelector(".lightbox-fullsize");
+
+  let scale = 1;
+  let originX = 0;
+  let originY = 0;
+  let lastFocused = null;
+
+  const clampScale = (value) => Math.min(maxScale, Math.max(minScale, value));
+
+  const applyTransform = () => {
+    image.style.transform = `translate(${originX}px, ${originY}px) scale(${scale})`;
+    imageWrap.classList.toggle("zoomed", scale > minScale);
+  };
+
+  const setScale = (nextScale) => {
+    scale = clampScale(nextScale);
+    if (scale === minScale) {
+      originX = 0;
+      originY = 0;
+    }
+    applyTransform();
+  };
+
+  const resetZoom = () => {
+    scale = 1;
+    originX = 0;
+    originY = 0;
+    applyTransform();
+  };
+
+  const openLightbox = (link) => {
+    const img = link.querySelector("img");
+    if (!img) return;
+    lastFocused = document.activeElement;
+    image.src = link.href;
+    image.alt = img.alt || "";
+    caption.textContent = img.alt || "";
+    fullsizeLink.href = link.href;
+    resetZoom();
+    lightbox.hidden = false;
+    document.body.classList.add("lightbox-open");
+    requestAnimationFrame(() => lightbox.classList.add("open"));
+    closeButton.focus();
+  };
+
+  const closeLightbox = () => {
+    lightbox.classList.remove("open");
+    document.body.classList.remove("lightbox-open");
+    window.setTimeout(() => {
+      lightbox.hidden = true;
+      image.src = "";
+    }, 200);
+    if (lastFocused) lastFocused.focus();
+  };
+
+  links.forEach((link) => {
+    link.addEventListener("click", (event) => {
+      event.preventDefault();
+      openLightbox(link);
+    });
+  });
+
+  backdrop.addEventListener("click", closeLightbox);
+  closeButton.addEventListener("click", closeLightbox);
+  document.addEventListener("keydown", (event) => {
+    if (lightbox.hidden || event.key !== "Escape") return;
+    closeLightbox();
+  });
+
+  // Desktop: scroll/wheel to zoom
+  imageWrap.addEventListener("wheel", (event) => {
+    event.preventDefault();
+    const zoomFactor = event.deltaY < 0 ? 1.12 : 1 / 1.12;
+    setScale(scale * zoomFactor);
+  }, { passive: false });
+
+  // Desktop: drag to pan once zoomed in
+  let isDragging = false;
+  let dragStartX = 0;
+  let dragStartY = 0;
+  let dragOriginX = 0;
+  let dragOriginY = 0;
+
+  imageWrap.addEventListener("mousedown", (event) => {
+    if (scale <= minScale) return;
+    isDragging = true;
+    dragStartX = event.clientX;
+    dragStartY = event.clientY;
+    dragOriginX = originX;
+    dragOriginY = originY;
+    imageWrap.classList.add("dragging");
+  });
+
+  window.addEventListener("mousemove", (event) => {
+    if (!isDragging) return;
+    originX = dragOriginX + (event.clientX - dragStartX);
+    originY = dragOriginY + (event.clientY - dragStartY);
+    applyTransform();
+  });
+
+  window.addEventListener("mouseup", () => {
+    isDragging = false;
+    imageWrap.classList.remove("dragging");
+  });
+
+  // Mobile: pinch to zoom, single-finger drag to pan once zoomed in
+  let pinchStartDistance = 0;
+  let pinchStartScale = 1;
+  let touchStartX = 0;
+  let touchStartY = 0;
+  let touchOriginX = 0;
+  let touchOriginY = 0;
+
+  const touchDistance = (touches) => Math.hypot(
+    touches[0].clientX - touches[1].clientX,
+    touches[0].clientY - touches[1].clientY,
+  );
+
+  imageWrap.addEventListener("touchstart", (event) => {
+    if (event.touches.length === 2) {
+      pinchStartDistance = touchDistance(event.touches);
+      pinchStartScale = scale;
+    } else if (event.touches.length === 1 && scale > minScale) {
+      touchStartX = event.touches[0].clientX;
+      touchStartY = event.touches[0].clientY;
+      touchOriginX = originX;
+      touchOriginY = originY;
+    }
+  }, { passive: true });
+
+  imageWrap.addEventListener("touchmove", (event) => {
+    if (event.touches.length === 2) {
+      event.preventDefault();
+      const distance = touchDistance(event.touches);
+      setScale(pinchStartScale * (distance / pinchStartDistance));
+    } else if (event.touches.length === 1 && scale > minScale) {
+      event.preventDefault();
+      originX = touchOriginX + (event.touches[0].clientX - touchStartX);
+      originY = touchOriginY + (event.touches[0].clientY - touchStartY);
+      applyTransform();
+    }
+  }, { passive: false });
+
+  image.addEventListener("dblclick", () => {
+    setScale(scale > minScale ? 1 : 2);
+  });
+})();
