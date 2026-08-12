@@ -40,7 +40,7 @@ document.querySelectorAll("nav").forEach((nav) => {
       "snow-removal-fund.html",
     ],
     "documents.html": ["documents.html"],
-    "gallery.html": ["gallery.html", "a-view-from-the-uplands.html", "picture-of-the-month.html"],
+    "gallery.html": ["gallery.html", "a-view-from-the-uplands.html", "picture-of-the-month.html", "photo-submissions.html"],
     "support.html": ["support.html"],
   };
   const primaryLinks = [
@@ -110,9 +110,6 @@ document.querySelectorAll("[data-calendar-shell]").forEach((shell) => {
 
 // Gallery image lightbox with scroll/pinch zoom
 (() => {
-  const links = document.querySelectorAll("a.gallery-item");
-  if (!links.length) return;
-
   const minScale = 1;
   const maxScale = 4;
 
@@ -194,17 +191,18 @@ document.querySelectorAll("[data-calendar-shell]").forEach((shell) => {
     if (lastFocused) lastFocused.focus();
   };
 
-  links.forEach((link) => {
-    link.addEventListener("click", (event) => {
-      event.preventDefault();
-      openLightbox(link);
-    });
+  document.addEventListener("click", (event) => {
+    const link = event.target.closest("a.gallery-item");
+    if (!link) return;
+    event.preventDefault();
+    openLightbox(link);
   });
 
   backdrop.addEventListener("click", closeLightbox);
   closeButton.addEventListener("click", closeLightbox);
   document.addEventListener("keydown", (event) => {
     if (lightbox.hidden || event.key !== "Escape") return;
+    event.stopImmediatePropagation();
     closeLightbox();
   });
 
@@ -285,4 +283,136 @@ document.querySelectorAll("[data-calendar-shell]").forEach((shell) => {
   image.addEventListener("dblclick", () => {
     setScale(scale > minScale ? 1 : 2);
   });
+})();
+
+// Monthly photo spotlight archive (placeholder data until real winners are chosen)
+(() => {
+  const grid = document.querySelector("[data-month-grid]");
+  if (!grid) return;
+
+  const MONTHS = [
+    "January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December",
+  ];
+  const YEARS = [2021, 2022, 2023, 2024, 2025, 2026];
+
+  const PLACEHOLDER_IMAGES = [
+    "assets/images/gallery/370200587_870606807759681_210162988387038657_n.jpg",
+    "assets/images/gallery/370284342_3724934461074046_4475135608361034929_n.jpg",
+    "assets/images/gallery/370288914_343897248176822_4017444663952019519_n.jpg",
+    "assets/images/gallery/387524236_654603430138371_8893289489707215956_n.jpg",
+    "assets/images/gallery/393069102_852196503037291_2594759480600169748_n.jpg",
+    "assets/images/gallery/393239159_832398685026651_940337507189797651_n.jpg",
+    "assets/images/gallery/393239160_1048998059878200_1765748896183752875_n.jpg",
+    "assets/images/gallery/393317372_156920570831181_316524598836203724_n.jpg",
+    "assets/images/gallery/393441815_1036597244320316_8906372888410770643_n.jpg",
+    "assets/images/gallery/393441822_1001897891131364_6273993662342847778_n.jpg",
+    "assets/images/gallery/393462541_1014906179809474_5199457459963997106_n.jpg",
+    "assets/images/gallery/IMG_0650.JPG.jpeg",
+    "assets/images/gallery/IMG_1450.jpeg",
+    "assets/images/gallery/IMG_1564_VSCO.JPG.jpeg",
+    "assets/images/gallery/IMG_2232.jpeg",
+    "assets/images/gallery/IMG_6191.jpeg",
+    "assets/images/gallery/IMG_6194.jpeg",
+    "assets/images/gallery/IMG_6196.jpeg",
+    "assets/images/gallery/IMG_6401.JPG.jpeg",
+    "assets/images/gallery/IMG_6482_VSCO.JPG.jpeg",
+    "assets/images/gallery/IMG_8886.jpeg",
+    "assets/images/gallery/blue-door.jpg",
+    "assets/images/gallery/flower-pinwheel.jpg",
+    "assets/images/gallery/hero-fall-frame-houses.jpg",
+    "assets/images/gallery/plant-drop-house.jpg",
+    "assets/images/gallery/porch-light.jpg",
+    "assets/images/gallery/sunset-fence.jpg",
+    "assets/images/gallery/sunset-lamp.jpg",
+    "assets/images/gallery/sunset-stop-sign.jpg",
+    "assets/images/gallery/sunset-waves.jpg",
+  ];
+
+  const currentMonthLabel = document.querySelector("[data-current-month]");
+  if (currentMonthLabel) currentMonthLabel.textContent = MONTHS[new Date().getMonth()];
+
+  const imageFor = (monthIndex, yearIndex) =>
+    PLACEHOLDER_IMAGES[(monthIndex * YEARS.length + yearIndex) % PLACEHOLDER_IMAGES.length];
+
+  const modal = document.createElement("div");
+  modal.className = "month-modal";
+  modal.hidden = true;
+  modal.innerHTML = `
+    <div class="month-modal-backdrop"></div>
+    <div class="month-modal-content" role="dialog" aria-modal="true" aria-label="Monthly photo spotlight winners">
+      <button type="button" class="month-modal-close" aria-label="Close">&times;</button>
+      <h2 class="month-modal-title"></h2>
+      <p class="month-modal-subtitle">Placeholder photographs shown here — annual winners will replace these as they're selected.</p>
+      <div class="month-modal-grid"></div>
+    </div>
+  `;
+  document.body.appendChild(modal);
+
+  const backdrop = modal.querySelector(".month-modal-backdrop");
+  const closeButton = modal.querySelector(".month-modal-close");
+  const title = modal.querySelector(".month-modal-title");
+  const winnersGrid = modal.querySelector(".month-modal-grid");
+
+  let lastFocused = null;
+
+  const closeModal = () => {
+    modal.classList.remove("open");
+    document.body.classList.remove("month-modal-open");
+    window.setTimeout(() => {
+      modal.hidden = true;
+    }, 200);
+    if (lastFocused) lastFocused.focus();
+  };
+
+  const openModal = (monthIndex) => {
+    lastFocused = document.activeElement;
+    title.textContent = `${MONTHS[monthIndex]} winners`;
+    winnersGrid.replaceChildren(...YEARS.map((year, yearIndex) => {
+      const link = document.createElement("a");
+      link.className = "gallery-item month-winner";
+      link.href = imageFor(monthIndex, yearIndex);
+
+      const img = document.createElement("img");
+      img.src = link.href;
+      img.alt = `${MONTHS[monthIndex]} ${year} photo spotlight winner (placeholder)`;
+
+      const yearTag = document.createElement("span");
+      yearTag.className = "month-winner-year";
+      yearTag.textContent = year;
+
+      link.append(img, yearTag);
+      return link;
+    }));
+    modal.hidden = false;
+    document.body.classList.add("month-modal-open");
+    requestAnimationFrame(() => modal.classList.add("open"));
+    closeButton.focus();
+  };
+
+  backdrop.addEventListener("click", closeModal);
+  closeButton.addEventListener("click", closeModal);
+  document.addEventListener("keydown", (event) => {
+    if (modal.hidden || event.key !== "Escape") return;
+    closeModal();
+  });
+
+  grid.replaceChildren(...MONTHS.map((month, monthIndex) => {
+    const latestYearIndex = YEARS.length - 1;
+    const src = imageFor(monthIndex, latestYearIndex);
+
+    const card = document.createElement("button");
+    card.type = "button";
+    card.className = "month-card";
+    card.setAttribute("aria-haspopup", "dialog");
+    card.innerHTML = `
+      <span class="month-card-thumb">
+        <img src="${src}" alt="${month} ${YEARS[latestYearIndex]} photo spotlight winner (placeholder)">
+        <span class="month-card-year">${YEARS[latestYearIndex]}</span>
+      </span>
+      <span class="month-card-label">${month}</span>
+    `;
+    card.addEventListener("click", () => openModal(monthIndex));
+    return card;
+  }));
 })();
