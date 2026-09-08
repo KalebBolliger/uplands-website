@@ -3896,12 +3896,20 @@ body.lightbox-open {
   }
 }
 
-/* Gallery page: monthly highlights + photo submission subsections */
-.picture-month-section,
+/* Gallery page: monthly highlights, general gallery, and photo submission subsections */
+.picture-month-section {
+  margin-top: 12px;
+}
+
+.gallery-section,
 .photo-submit-section {
   margin-top: 72px;
   padding-top: 48px;
   border-top: 1px solid rgba(35, 66, 54, .16);
+}
+
+.gallery-section .gallery-grid {
+  margin-top: 0;
 }
 
 .month-archive {
