@@ -293,6 +293,10 @@ document.querySelectorAll("[data-calendar-shell]").forEach((shell) => {
   const nextYearLabel = document.querySelector("[data-month-year-next-label]");
   const prevButton = document.querySelector("[data-month-year-prev]");
   const nextButton = document.querySelector("[data-month-year-next]");
+  const feature = document.querySelector("[data-month-feature]");
+  const featureLink = document.querySelector("[data-month-feature-link]");
+  const featureImg = document.querySelector("[data-month-feature-img]");
+  const featureCaption = document.querySelector("[data-month-feature-caption]");
   if (!strip || !yearLabel || !prevYearLabel || !nextYearLabel || !prevButton || !nextButton) return;
 
   const MONTHS = [
@@ -347,8 +351,39 @@ document.querySelectorAll("[data-calendar-shell]").forEach((shell) => {
     return PLACEHOLDER_IMAGES[seed % PLACEHOLDER_IMAGES.length];
   };
 
-  // A year only has highlights through the current month — no future months yet.
-  const decidedMonthCount = (year) => (year < CURRENT_YEAR ? MONTHS.length : CURRENT_MONTH + 1);
+  // Whether a month actually has a chosen highlight yet. Past years are fully
+  // decided; the current year is only decided through *last* month, since the
+  // current month's photo may not be picked yet. Written as a per-month check
+  // (not a contiguous count) so gaps — including "nothing chosen this month" —
+  // render correctly instead of assuming every month up to some cutoff exists.
+  const hasHighlight = (year, monthIndex) => {
+    if (year < START_YEAR || year > CURRENT_YEAR) return false;
+    if (year < CURRENT_YEAR) return true;
+    return monthIndex < CURRENT_MONTH;
+  };
+
+  const findLatestHighlight = () => {
+    for (let year = CURRENT_YEAR; year >= START_YEAR; year--) {
+      for (let monthIndex = MONTHS.length - 1; monthIndex >= 0; monthIndex--) {
+        if (hasHighlight(year, monthIndex)) return { year, monthIndex };
+      }
+    }
+    return null;
+  };
+
+  if (feature && featureLink && featureImg && featureCaption) {
+    const latest = findLatestHighlight();
+    if (latest) {
+      const src = imageFor(latest.year, latest.monthIndex);
+      const label = `${MONTHS[latest.monthIndex]} ${latest.year}`;
+      featureLink.href = src;
+      featureLink.setAttribute("aria-label", `Open the ${label} highlight at full size`);
+      featureImg.src = src;
+      featureImg.alt = `${label} monthly highlight (placeholder)`;
+      featureCaption.textContent = label;
+      feature.hidden = false;
+    }
+  }
 
   let selectedYear = CURRENT_YEAR;
 
@@ -359,8 +394,11 @@ document.querySelectorAll("[data-calendar-shell]").forEach((shell) => {
     prevButton.disabled = selectedYear <= START_YEAR;
     nextButton.disabled = selectedYear >= CURRENT_YEAR;
 
-    const monthCount = decidedMonthCount(selectedYear);
-    strip.replaceChildren(...MONTHS.slice(0, monthCount).map((month, monthIndex) => {
+    const decidedMonths = MONTHS
+      .map((month, monthIndex) => ({ month, monthIndex }))
+      .filter(({ monthIndex }) => hasHighlight(selectedYear, monthIndex));
+
+    strip.replaceChildren(...decidedMonths.map(({ month, monthIndex }) => {
       const link = document.createElement("a");
       link.className = "gallery-item month-tile";
       link.href = imageFor(selectedYear, monthIndex);

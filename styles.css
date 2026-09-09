@@ -3821,6 +3821,37 @@ body.lightbox-open {
   color: var(--green);
 }
 
+.month-feature {
+  margin: 0 0 28px;
+}
+
+.month-feature[hidden] {
+  display: none;
+}
+
+.month-feature a {
+  display: block;
+  overflow: hidden;
+  border-radius: 16px;
+  background: var(--light-green);
+  box-shadow: 0 16px 38px rgba(21, 47, 39, .14);
+}
+
+.month-feature img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+
+.month-feature figcaption {
+  margin-top: 10px;
+  text-align: center;
+  color: var(--green);
+  font-weight: 700;
+  font-size: 1.05rem;
+}
+
 .month-year-dial {
   display: flex;
   align-items: center;
