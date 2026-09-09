@@ -285,16 +285,24 @@ document.querySelectorAll("[data-calendar-shell]").forEach((shell) => {
   });
 })();
 
-// Monthly highlights archive (placeholder data until real winners are chosen)
+// Monthly highlights: year-by-year strip (placeholder data until real winners are chosen)
 (() => {
-  const grid = document.querySelector("[data-month-grid]");
-  if (!grid) return;
+  const strip = document.querySelector("[data-month-strip]");
+  const yearLabel = document.querySelector("[data-month-year-label]");
+  const prevButton = document.querySelector("[data-month-year-prev]");
+  const nextButton = document.querySelector("[data-month-year-next]");
+  if (!strip || !yearLabel || !prevButton || !nextButton) return;
 
   const MONTHS = [
     "January", "February", "March", "April", "May", "June",
     "July", "August", "September", "October", "November", "December",
   ];
-  const YEARS = [2021, 2022, 2023, 2024, 2025, 2026];
+  const MONTHS_SHORT = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  const START_YEAR = 2021;
+
+  const now = new Date();
+  const CURRENT_YEAR = now.getFullYear();
+  const CURRENT_MONTH = now.getMonth();
 
   const PLACEHOLDER_IMAGES = [
     "assets/images/gallery/370200587_870606807759681_210162988387038657_n.jpg",
@@ -330,89 +338,57 @@ document.querySelectorAll("[data-calendar-shell]").forEach((shell) => {
   ];
 
   const currentMonthLabel = document.querySelector("[data-current-month]");
-  if (currentMonthLabel) currentMonthLabel.textContent = MONTHS[new Date().getMonth()];
+  if (currentMonthLabel) currentMonthLabel.textContent = MONTHS[CURRENT_MONTH];
 
-  const imageFor = (monthIndex, yearIndex) =>
-    PLACEHOLDER_IMAGES[(monthIndex * YEARS.length + yearIndex) % PLACEHOLDER_IMAGES.length];
-
-  const modal = document.createElement("div");
-  modal.className = "month-modal";
-  modal.hidden = true;
-  modal.innerHTML = `
-    <div class="month-modal-backdrop"></div>
-    <div class="month-modal-content" role="dialog" aria-modal="true" aria-label="Monthly highlights winners">
-      <button type="button" class="month-modal-close" aria-label="Close">&times;</button>
-      <h2 class="month-modal-title"></h2>
-      <p class="month-modal-subtitle">Placeholder photographs shown here — annual winners will replace these as they're selected.</p>
-      <div class="month-modal-grid"></div>
-    </div>
-  `;
-  document.body.appendChild(modal);
-
-  const backdrop = modal.querySelector(".month-modal-backdrop");
-  const closeButton = modal.querySelector(".month-modal-close");
-  const title = modal.querySelector(".month-modal-title");
-  const winnersGrid = modal.querySelector(".month-modal-grid");
-
-  let lastFocused = null;
-
-  const closeModal = () => {
-    modal.classList.remove("open");
-    document.body.classList.remove("month-modal-open");
-    window.setTimeout(() => {
-      modal.hidden = true;
-    }, 200);
-    if (lastFocused) lastFocused.focus();
+  const imageFor = (year, monthIndex) => {
+    const seed = (year - START_YEAR) * MONTHS.length + monthIndex;
+    return PLACEHOLDER_IMAGES[seed % PLACEHOLDER_IMAGES.length];
   };
 
-  const openModal = (monthIndex) => {
-    lastFocused = document.activeElement;
-    title.textContent = `${MONTHS[monthIndex]} winners`;
-    winnersGrid.replaceChildren(...YEARS.map((year, yearIndex) => {
-      const link = document.createElement("a");
-      link.className = "gallery-item month-winner";
-      link.href = imageFor(monthIndex, yearIndex);
+  // A month only has a highlight once it's actually happened.
+  const isDecided = (year, monthIndex) =>
+    year < CURRENT_YEAR || (year === CURRENT_YEAR && monthIndex <= CURRENT_MONTH);
 
-      const img = document.createElement("img");
-      img.src = link.href;
-      img.alt = `${MONTHS[monthIndex]} ${year} monthly highlight winner (placeholder)`;
+  let selectedYear = CURRENT_YEAR;
 
-      const yearTag = document.createElement("span");
-      yearTag.className = "month-winner-year";
-      yearTag.textContent = year;
+  const render = () => {
+    yearLabel.textContent = selectedYear;
+    prevButton.disabled = selectedYear <= START_YEAR;
+    nextButton.disabled = selectedYear >= CURRENT_YEAR;
 
-      link.append(img, yearTag);
-      return link;
+    strip.replaceChildren(...MONTHS.map((month, monthIndex) => {
+      if (isDecided(selectedYear, monthIndex)) {
+        const link = document.createElement("a");
+        link.className = "gallery-item month-tile";
+        link.href = imageFor(selectedYear, monthIndex);
+        link.innerHTML = `
+          <span class="month-tile-thumb"><img src="${link.href}" alt="${month} ${selectedYear} monthly highlight (placeholder)"></span>
+          <span class="month-tile-label">${MONTHS_SHORT[monthIndex]}</span>
+        `;
+        return link;
+      }
+
+      const upcoming = document.createElement("div");
+      upcoming.className = "month-tile month-tile--upcoming";
+      upcoming.innerHTML = `
+        <span class="month-tile-thumb month-tile-thumb--upcoming" aria-hidden="true">Soon</span>
+        <span class="month-tile-label">${MONTHS_SHORT[monthIndex]}</span>
+      `;
+      return upcoming;
     }));
-    modal.hidden = false;
-    document.body.classList.add("month-modal-open");
-    requestAnimationFrame(() => modal.classList.add("open"));
-    closeButton.focus();
   };
 
-  backdrop.addEventListener("click", closeModal);
-  closeButton.addEventListener("click", closeModal);
-  document.addEventListener("keydown", (event) => {
-    if (modal.hidden || event.key !== "Escape") return;
-    closeModal();
+  prevButton.addEventListener("click", () => {
+    if (selectedYear <= START_YEAR) return;
+    selectedYear -= 1;
+    render();
   });
 
-  grid.replaceChildren(...MONTHS.map((month, monthIndex) => {
-    const latestYearIndex = YEARS.length - 1;
-    const src = imageFor(monthIndex, latestYearIndex);
+  nextButton.addEventListener("click", () => {
+    if (selectedYear >= CURRENT_YEAR) return;
+    selectedYear += 1;
+    render();
+  });
 
-    const card = document.createElement("button");
-    card.type = "button";
-    card.className = "month-card";
-    card.setAttribute("aria-haspopup", "dialog");
-    card.innerHTML = `
-      <span class="month-card-thumb">
-        <img src="${src}" alt="${month} ${YEARS[latestYearIndex]} monthly highlight winner (placeholder)">
-        <span class="month-card-year">${YEARS[latestYearIndex]}</span>
-      </span>
-      <span class="month-card-label">${month}</span>
-    `;
-    card.addEventListener("click", () => openModal(monthIndex));
-    return card;
-  }));
+  render();
 })();

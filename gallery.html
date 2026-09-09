@@ -34,7 +34,7 @@
     <header class="gallery-intro">
       <p class="section-kicker">The neighborhood in pictures</p>
       <h1 class="page-title">Neighborhood Gallery</h1>
-      <p>Browse the full photo collection, this month’s featured shot, and how to submit your own.</p>
+      <p>Historic homes, boulevard gardens, seasonal gatherings, and everyday Uplands life — plus this month’s featured photo and how to submit your own.</p>
       <div class="gallery-intro-actions">
         <a class="button" href="#monthly-highlights">Monthly highlights</a>
         <a class="button secondary" href="#submit-a-photo">Submit a photo</a>
@@ -43,149 +43,117 @@
       <p class="gallery-photographer-credit">Photos by Raphael Rodolfi</p>
     </header>
 
-    <section class="picture-month-section" id="monthly-highlights" aria-labelledby="monthly-highlights-title">
-      <div class="section-heading">
+    <section class="month-highlights" id="monthly-highlights" aria-labelledby="monthly-highlights-title">
+      <div class="month-highlights-header">
         <div>
           <p class="section-kicker">From around the neighborhood</p>
           <h2 id="monthly-highlights-title">Monthly Highlights</h2>
         </div>
-        <p>A changing view of the details, places, and moments that make the Uplands home.</p>
-      </div>
-
-      <figure class="picture-month-feature">
-        <a href="assets/images/gallery/porch-light.jpg" aria-label="Open the featured photograph at full size">
-          <img src="assets/images/gallery/porch-light.jpg" alt="A warmly lit porch in the Uplands at dusk" />
-        </a>
-        <figcaption>
-          <span>Porch light in the Uplands · Peoria, Illinois</span>
-          <span class="picture-credit">Photo: Raphael Rodolfi</span>
-        </figcaption>
-      </figure>
-
-      <section class="picture-month-share" aria-labelledby="picture-share-title">
-        <div>
-          <p class="section-kicker">Take this view with you</p>
-          <h3 id="picture-share-title">Scan to see this month’s picture</h3>
-          <p>This QR code always opens the current monthly highlight, so it can be reused on signs, newsletters, and event materials.</p>
-          <a class="document-link" href="assets/images/picture-of-the-month-qr.png" download="uplands-picture-of-the-month-qr.png">Download the QR code <span aria-hidden="true">↓</span></a>
+        <div class="month-year-nav" role="group" aria-label="Select year">
+          <button type="button" class="month-year-btn" data-month-year-prev aria-label="Previous year">‹</button>
+          <span class="month-year-label" data-month-year-label></span>
+          <button type="button" class="month-year-btn" data-month-year-next aria-label="Next year">›</button>
         </div>
-        <a class="picture-month-qr" href="https://theuplandspeoria.org/picture-of-the-month.html" aria-label="Open the Picture of the Month page">
-          <img src="assets/images/picture-of-the-month-qr.png" alt="QR code linking to the Uplands Picture of the Month page" width="280" height="280" />
-        </a>
-      </section>
-
-      <div class="month-archive">
-        <h3 class="month-archive-heading">Winners by month</h3>
-        <p class="month-archive-subtitle">Select a month to see its winning photograph from past years. Shown below are placeholder photos until annual winners are selected.</p>
-        <div class="month-grid" data-month-grid></div>
       </div>
+      <div class="month-strip" data-month-strip></div>
+      <p class="month-highlights-footnote">Have a photo of the Uplands you love? <a href="#submit-a-photo">Submit it</a> to be featured next — or <a href="assets/images/picture-of-the-month-qr.png" download="uplands-picture-of-the-month-qr.png">download the QR code</a> that always links here.</p>
     </section>
 
-    <section class="gallery-section" id="general-gallery" aria-labelledby="general-gallery-title">
-      <div class="section-heading">
-        <div>
-          <p class="section-kicker">The full collection</p>
-          <h2 id="general-gallery-title">General Gallery</h2>
-        </div>
-        <p>Historic homes, boulevard gardens, seasonal gatherings, and everyday Uplands life.</p>
-      </div>
-
-      <div class="gallery-grid">
-        <a class="gallery-item" href="assets/images/gallery/370200587_870606807759681_210162988387038657_n.jpg">
-          <img src="assets/images/gallery/370200587_870606807759681_210162988387038657_n.jpg" alt="Uplands neighborhood photograph 1">
-        </a>
-        <a class="gallery-item" href="assets/images/gallery/370284342_3724934461074046_4475135608361034929_n.jpg">
-          <img src="assets/images/gallery/370284342_3724934461074046_4475135608361034929_n.jpg" alt="Uplands neighborhood photograph 2">
-        </a>
-        <a class="gallery-item" href="assets/images/gallery/370288914_343897248176822_4017444663952019519_n.jpg">
-          <img src="assets/images/gallery/370288914_343897248176822_4017444663952019519_n.jpg" alt="Uplands neighborhood photograph 3">
-        </a>
-        <a class="gallery-item" href="assets/images/gallery/387524236_654603430138371_8893289489707215956_n.jpg">
-          <img src="assets/images/gallery/387524236_654603430138371_8893289489707215956_n.jpg" alt="Uplands neighborhood photograph 4">
-        </a>
-        <a class="gallery-item" href="assets/images/gallery/393069102_852196503037291_2594759480600169748_n.jpg">
-          <img src="assets/images/gallery/393069102_852196503037291_2594759480600169748_n.jpg" alt="Uplands neighborhood photograph 5">
-        </a>
-        <a class="gallery-item" href="assets/images/gallery/393239159_832398685026651_940337507189797651_n.jpg">
-          <img src="assets/images/gallery/393239159_832398685026651_940337507189797651_n.jpg" alt="Uplands neighborhood photograph 6">
-        </a>
-        <a class="gallery-item" href="assets/images/gallery/393239160_1048998059878200_1765748896183752875_n.jpg">
-          <img src="assets/images/gallery/393239160_1048998059878200_1765748896183752875_n.jpg" alt="Uplands neighborhood photograph 7">
-        </a>
-        <a class="gallery-item" href="assets/images/gallery/393317372_156920570831181_316524598836203724_n.jpg">
-          <img src="assets/images/gallery/393317372_156920570831181_316524598836203724_n.jpg" alt="Uplands neighborhood photograph 8">
-        </a>
-        <a class="gallery-item" href="assets/images/gallery/393441815_1036597244320316_8906372888410770643_n.jpg">
-          <img src="assets/images/gallery/393441815_1036597244320316_8906372888410770643_n.jpg" alt="Uplands neighborhood photograph 9">
-        </a>
-        <a class="gallery-item" href="assets/images/gallery/393441822_1001897891131364_6273993662342847778_n.jpg">
-          <img src="assets/images/gallery/393441822_1001897891131364_6273993662342847778_n.jpg" alt="Uplands neighborhood photograph 10">
-        </a>
-        <a class="gallery-item" href="assets/images/gallery/393462541_1014906179809474_5199457459963997106_n.jpg">
-          <img src="assets/images/gallery/393462541_1014906179809474_5199457459963997106_n.jpg" alt="Uplands neighborhood photograph 11">
-        </a>
-        <a class="gallery-item" href="assets/images/gallery/IMG_0650.JPG.jpeg">
-          <img src="assets/images/gallery/IMG_0650.JPG.jpeg" alt="Uplands neighborhood photograph 12">
-        </a>
-        <a class="gallery-item" href="assets/images/gallery/IMG_1450.jpeg">
-          <img src="assets/images/gallery/IMG_1450.jpeg" alt="Uplands neighborhood photograph 13">
-        </a>
-        <a class="gallery-item" href="assets/images/gallery/IMG_1564_VSCO.JPG.jpeg">
-          <img src="assets/images/gallery/IMG_1564_VSCO.JPG.jpeg" alt="Uplands neighborhood photograph 14">
-        </a>
-        <a class="gallery-item" href="assets/images/gallery/IMG_2232.jpeg">
-          <img src="assets/images/gallery/IMG_2232.jpeg" alt="Uplands neighborhood photograph 15">
-        </a>
-        <a class="gallery-item" href="assets/images/gallery/IMG_6191.jpeg">
-          <img src="assets/images/gallery/IMG_6191.jpeg" alt="Detail of Preston Jackson's Never Extinct bronze sculpture">
-        </a>
-        <a class="gallery-item" href="assets/images/gallery/IMG_6194.jpeg">
-          <img src="assets/images/gallery/IMG_6194.jpeg" alt="Preston Jackson's Never Extinct bronze sculpture in Upper Laura Bradley Park">
-        </a>
-        <a class="gallery-item" href="assets/images/gallery/IMG_6196.jpeg">
-          <img src="assets/images/gallery/IMG_6196.jpeg" alt="Uplands neighborhood photograph 18">
-        </a>
-        <a class="gallery-item" href="assets/images/gallery/IMG_6401.JPG.jpeg">
-          <img src="assets/images/gallery/IMG_6401.JPG.jpeg" alt="Uplands neighborhood photograph 19">
-        </a>
-        <a class="gallery-item" href="assets/images/gallery/IMG_6482_VSCO.JPG.jpeg">
-          <img src="assets/images/gallery/IMG_6482_VSCO.JPG.jpeg" alt="Uplands neighborhood photograph 20">
-        </a>
-        <a class="gallery-item" href="assets/images/gallery/IMG_8886.jpeg">
-          <img src="assets/images/gallery/IMG_8886.jpeg" alt="Uplands neighborhood photograph 21">
-        </a>
-        <a class="gallery-item" href="assets/images/gallery/Screenshot%202025-12-24%20at%2010.02.39.jpeg">
-          <img src="assets/images/gallery/Screenshot%202025-12-24%20at%2010.02.39.jpeg" alt="Uplands neighborhood photograph 22">
-        </a>
-        <a class="gallery-item" href="assets/images/gallery/blue-door.jpg">
-          <img src="assets/images/gallery/blue-door.jpg" alt="Uplands neighborhood photograph 23">
-        </a>
-        <a class="gallery-item" href="assets/images/gallery/flower-pinwheel.jpg">
-          <img src="assets/images/gallery/flower-pinwheel.jpg" alt="Uplands neighborhood photograph 24">
-        </a>
-        <a class="gallery-item" href="assets/images/gallery/hero-fall-frame-houses.jpg">
-          <img src="assets/images/gallery/hero-fall-frame-houses.jpg" alt="Uplands neighborhood photograph 25">
-        </a>
-        <a class="gallery-item" href="assets/images/gallery/plant-drop-house.jpg">
-          <img src="assets/images/gallery/plant-drop-house.jpg" alt="Uplands neighborhood photograph 26">
-        </a>
-        <a class="gallery-item" href="assets/images/gallery/porch-light.jpg">
-          <img src="assets/images/gallery/porch-light.jpg" alt="Uplands neighborhood photograph 27">
-        </a>
-        <a class="gallery-item" href="assets/images/gallery/sunset-fence.jpg">
-          <img src="assets/images/gallery/sunset-fence.jpg" alt="Uplands neighborhood photograph 28">
-        </a>
-        <a class="gallery-item" href="assets/images/gallery/sunset-lamp.jpg">
-          <img src="assets/images/gallery/sunset-lamp.jpg" alt="Uplands neighborhood photograph 29">
-        </a>
-        <a class="gallery-item" href="assets/images/gallery/sunset-stop-sign.jpg">
-          <img src="assets/images/gallery/sunset-stop-sign.jpg" alt="Uplands neighborhood photograph 30">
-        </a>
-        <a class="gallery-item" href="assets/images/gallery/sunset-waves.jpg">
-          <img src="assets/images/gallery/sunset-waves.jpg" alt="Uplands neighborhood photograph 31">
+    <div class="gallery-grid">
+      <a class="gallery-item" href="assets/images/gallery/370200587_870606807759681_210162988387038657_n.jpg">
+        <img src="assets/images/gallery/370200587_870606807759681_210162988387038657_n.jpg" alt="Uplands neighborhood photograph 1">
       </a>
-      </div>
-    </section>
+      <a class="gallery-item" href="assets/images/gallery/370284342_3724934461074046_4475135608361034929_n.jpg">
+        <img src="assets/images/gallery/370284342_3724934461074046_4475135608361034929_n.jpg" alt="Uplands neighborhood photograph 2">
+      </a>
+      <a class="gallery-item" href="assets/images/gallery/370288914_343897248176822_4017444663952019519_n.jpg">
+        <img src="assets/images/gallery/370288914_343897248176822_4017444663952019519_n.jpg" alt="Uplands neighborhood photograph 3">
+      </a>
+      <a class="gallery-item" href="assets/images/gallery/387524236_654603430138371_8893289489707215956_n.jpg">
+        <img src="assets/images/gallery/387524236_654603430138371_8893289489707215956_n.jpg" alt="Uplands neighborhood photograph 4">
+      </a>
+      <a class="gallery-item" href="assets/images/gallery/393069102_852196503037291_2594759480600169748_n.jpg">
+        <img src="assets/images/gallery/393069102_852196503037291_2594759480600169748_n.jpg" alt="Uplands neighborhood photograph 5">
+      </a>
+      <a class="gallery-item" href="assets/images/gallery/393239159_832398685026651_940337507189797651_n.jpg">
+        <img src="assets/images/gallery/393239159_832398685026651_940337507189797651_n.jpg" alt="Uplands neighborhood photograph 6">
+      </a>
+      <a class="gallery-item" href="assets/images/gallery/393239160_1048998059878200_1765748896183752875_n.jpg">
+        <img src="assets/images/gallery/393239160_1048998059878200_1765748896183752875_n.jpg" alt="Uplands neighborhood photograph 7">
+      </a>
+      <a class="gallery-item" href="assets/images/gallery/393317372_156920570831181_316524598836203724_n.jpg">
+        <img src="assets/images/gallery/393317372_156920570831181_316524598836203724_n.jpg" alt="Uplands neighborhood photograph 8">
+      </a>
+      <a class="gallery-item" href="assets/images/gallery/393441815_1036597244320316_8906372888410770643_n.jpg">
+        <img src="assets/images/gallery/393441815_1036597244320316_8906372888410770643_n.jpg" alt="Uplands neighborhood photograph 9">
+      </a>
+      <a class="gallery-item" href="assets/images/gallery/393441822_1001897891131364_6273993662342847778_n.jpg">
+        <img src="assets/images/gallery/393441822_1001897891131364_6273993662342847778_n.jpg" alt="Uplands neighborhood photograph 10">
+      </a>
+      <a class="gallery-item" href="assets/images/gallery/393462541_1014906179809474_5199457459963997106_n.jpg">
+        <img src="assets/images/gallery/393462541_1014906179809474_5199457459963997106_n.jpg" alt="Uplands neighborhood photograph 11">
+      </a>
+      <a class="gallery-item" href="assets/images/gallery/IMG_0650.JPG.jpeg">
+        <img src="assets/images/gallery/IMG_0650.JPG.jpeg" alt="Uplands neighborhood photograph 12">
+      </a>
+      <a class="gallery-item" href="assets/images/gallery/IMG_1450.jpeg">
+        <img src="assets/images/gallery/IMG_1450.jpeg" alt="Uplands neighborhood photograph 13">
+      </a>
+      <a class="gallery-item" href="assets/images/gallery/IMG_1564_VSCO.JPG.jpeg">
+        <img src="assets/images/gallery/IMG_1564_VSCO.JPG.jpeg" alt="Uplands neighborhood photograph 14">
+      </a>
+      <a class="gallery-item" href="assets/images/gallery/IMG_2232.jpeg">
+        <img src="assets/images/gallery/IMG_2232.jpeg" alt="Uplands neighborhood photograph 15">
+      </a>
+      <a class="gallery-item" href="assets/images/gallery/IMG_6191.jpeg">
+        <img src="assets/images/gallery/IMG_6191.jpeg" alt="Detail of Preston Jackson's Never Extinct bronze sculpture">
+      </a>
+      <a class="gallery-item" href="assets/images/gallery/IMG_6194.jpeg">
+        <img src="assets/images/gallery/IMG_6194.jpeg" alt="Preston Jackson's Never Extinct bronze sculpture in Upper Laura Bradley Park">
+      </a>
+      <a class="gallery-item" href="assets/images/gallery/IMG_6196.jpeg">
+        <img src="assets/images/gallery/IMG_6196.jpeg" alt="Uplands neighborhood photograph 18">
+      </a>
+      <a class="gallery-item" href="assets/images/gallery/IMG_6401.JPG.jpeg">
+        <img src="assets/images/gallery/IMG_6401.JPG.jpeg" alt="Uplands neighborhood photograph 19">
+      </a>
+      <a class="gallery-item" href="assets/images/gallery/IMG_6482_VSCO.JPG.jpeg">
+        <img src="assets/images/gallery/IMG_6482_VSCO.JPG.jpeg" alt="Uplands neighborhood photograph 20">
+      </a>
+      <a class="gallery-item" href="assets/images/gallery/IMG_8886.jpeg">
+        <img src="assets/images/gallery/IMG_8886.jpeg" alt="Uplands neighborhood photograph 21">
+      </a>
+      <a class="gallery-item" href="assets/images/gallery/Screenshot%202025-12-24%20at%2010.02.39.jpeg">
+        <img src="assets/images/gallery/Screenshot%202025-12-24%20at%2010.02.39.jpeg" alt="Uplands neighborhood photograph 22">
+      </a>
+      <a class="gallery-item" href="assets/images/gallery/blue-door.jpg">
+        <img src="assets/images/gallery/blue-door.jpg" alt="Uplands neighborhood photograph 23">
+      </a>
+      <a class="gallery-item" href="assets/images/gallery/flower-pinwheel.jpg">
+        <img src="assets/images/gallery/flower-pinwheel.jpg" alt="Uplands neighborhood photograph 24">
+      </a>
+      <a class="gallery-item" href="assets/images/gallery/hero-fall-frame-houses.jpg">
+        <img src="assets/images/gallery/hero-fall-frame-houses.jpg" alt="Uplands neighborhood photograph 25">
+      </a>
+      <a class="gallery-item" href="assets/images/gallery/plant-drop-house.jpg">
+        <img src="assets/images/gallery/plant-drop-house.jpg" alt="Uplands neighborhood photograph 26">
+      </a>
+      <a class="gallery-item" href="assets/images/gallery/porch-light.jpg">
+        <img src="assets/images/gallery/porch-light.jpg" alt="Uplands neighborhood photograph 27">
+      </a>
+      <a class="gallery-item" href="assets/images/gallery/sunset-fence.jpg">
+        <img src="assets/images/gallery/sunset-fence.jpg" alt="Uplands neighborhood photograph 28">
+      </a>
+      <a class="gallery-item" href="assets/images/gallery/sunset-lamp.jpg">
+        <img src="assets/images/gallery/sunset-lamp.jpg" alt="Uplands neighborhood photograph 29">
+      </a>
+      <a class="gallery-item" href="assets/images/gallery/sunset-stop-sign.jpg">
+        <img src="assets/images/gallery/sunset-stop-sign.jpg" alt="Uplands neighborhood photograph 30">
+      </a>
+      <a class="gallery-item" href="assets/images/gallery/sunset-waves.jpg">
+        <img src="assets/images/gallery/sunset-waves.jpg" alt="Uplands neighborhood photograph 31">
+      </a>
+    </div>
 
     <section class="photo-submit-section" id="submit-a-photo" aria-labelledby="submit-a-photo-title">
       <div class="section-heading">
@@ -195,7 +163,7 @@
         </div>
         <p>Have a shot of the Uplands you love? It could be next month’s highlight.</p>
       </div>
-      <p>Every month we feature a resident-submitted photograph of life in the Uplands — historic homes, boulevard gardens, seasonal gatherings, pets, kids, and everyday neighborhood moments. One photo is chosen to represent each month, and it’s added to the year-by-year archive above.</p>
+      <p>Every month we feature a resident-submitted photograph of life in the Uplands — historic homes, boulevard gardens, seasonal gatherings, pets, kids, and everyday neighborhood moments. One photo is chosen to represent each month and added to the Monthly Highlights above, viewable anytime by year.</p>
       <p>This month (<strong data-current-month>this month</strong>): email your photo to <a href="mailto:photos@theuplandspeoria.org">photos@theuplandspeoria.org</a> to be considered. Please include your name, the location, and a short description.</p>
       <a class="document-link" href="mailto:photos@theuplandspeoria.org">Submit a photo <span aria-hidden="true">→</span></a>
     </section>
