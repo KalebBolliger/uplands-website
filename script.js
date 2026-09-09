@@ -289,9 +289,11 @@ document.querySelectorAll("[data-calendar-shell]").forEach((shell) => {
 (() => {
   const strip = document.querySelector("[data-month-strip]");
   const yearLabel = document.querySelector("[data-month-year-label]");
+  const prevYearLabel = document.querySelector("[data-month-year-prev-label]");
+  const nextYearLabel = document.querySelector("[data-month-year-next-label]");
   const prevButton = document.querySelector("[data-month-year-prev]");
   const nextButton = document.querySelector("[data-month-year-next]");
-  if (!strip || !yearLabel || !prevButton || !nextButton) return;
+  if (!strip || !yearLabel || !prevYearLabel || !nextYearLabel || !prevButton || !nextButton) return;
 
   const MONTHS = [
     "January", "February", "March", "April", "May", "June",
@@ -345,36 +347,28 @@ document.querySelectorAll("[data-calendar-shell]").forEach((shell) => {
     return PLACEHOLDER_IMAGES[seed % PLACEHOLDER_IMAGES.length];
   };
 
-  // A month only has a highlight once it's actually happened.
-  const isDecided = (year, monthIndex) =>
-    year < CURRENT_YEAR || (year === CURRENT_YEAR && monthIndex <= CURRENT_MONTH);
+  // A year only has highlights through the current month — no future months yet.
+  const decidedMonthCount = (year) => (year < CURRENT_YEAR ? MONTHS.length : CURRENT_MONTH + 1);
 
   let selectedYear = CURRENT_YEAR;
 
   const render = () => {
     yearLabel.textContent = selectedYear;
+    prevYearLabel.textContent = selectedYear > START_YEAR ? selectedYear - 1 : "";
+    nextYearLabel.textContent = selectedYear < CURRENT_YEAR ? selectedYear + 1 : "";
     prevButton.disabled = selectedYear <= START_YEAR;
     nextButton.disabled = selectedYear >= CURRENT_YEAR;
 
-    strip.replaceChildren(...MONTHS.map((month, monthIndex) => {
-      if (isDecided(selectedYear, monthIndex)) {
-        const link = document.createElement("a");
-        link.className = "gallery-item month-tile";
-        link.href = imageFor(selectedYear, monthIndex);
-        link.innerHTML = `
-          <span class="month-tile-thumb"><img src="${link.href}" alt="${month} ${selectedYear} monthly highlight (placeholder)"></span>
-          <span class="month-tile-label">${MONTHS_SHORT[monthIndex]}</span>
-        `;
-        return link;
-      }
-
-      const upcoming = document.createElement("div");
-      upcoming.className = "month-tile month-tile--upcoming";
-      upcoming.innerHTML = `
-        <span class="month-tile-thumb month-tile-thumb--upcoming" aria-hidden="true">Soon</span>
+    const monthCount = decidedMonthCount(selectedYear);
+    strip.replaceChildren(...MONTHS.slice(0, monthCount).map((month, monthIndex) => {
+      const link = document.createElement("a");
+      link.className = "gallery-item month-tile";
+      link.href = imageFor(selectedYear, monthIndex);
+      link.innerHTML = `
+        <span class="month-tile-thumb"><img src="${link.href}" alt="${month} ${selectedYear} monthly highlight (placeholder)"></span>
         <span class="month-tile-label">${MONTHS_SHORT[monthIndex]}</span>
       `;
-      return upcoming;
+      return link;
     }));
   };
 

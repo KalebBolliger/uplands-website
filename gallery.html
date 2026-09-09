@@ -43,23 +43,29 @@
       <p class="gallery-photographer-credit">Photos by Raphael Rodolfi</p>
     </header>
 
-    <section class="month-highlights" id="monthly-highlights" aria-labelledby="monthly-highlights-title">
-      <div class="month-highlights-header">
-        <div>
+    <p class="gallery-cta">Have a photo of the Uplands you love? <a href="#submit-a-photo">Submit it</a> to be featured next — or <a href="assets/images/picture-of-the-month-qr.png" download="uplands-picture-of-the-month-qr.png">download the QR code</a> that always links here.</p>
+
+    <section class="gallery-frame" aria-label="Neighborhood photo gallery">
+      <section class="month-highlights" id="monthly-highlights" aria-labelledby="monthly-highlights-title">
+        <div class="month-highlights-header">
           <p class="section-kicker">From around the neighborhood</p>
           <h2 id="monthly-highlights-title">Monthly Highlights</h2>
         </div>
-        <div class="month-year-nav" role="group" aria-label="Select year">
+
+        <div class="month-year-dial" role="group" aria-label="Select year">
           <button type="button" class="month-year-btn" data-month-year-prev aria-label="Previous year">‹</button>
-          <span class="month-year-label" data-month-year-label></span>
+          <div class="month-year-track">
+            <span class="month-year-adjacent" data-month-year-prev-label aria-hidden="true"></span>
+            <span class="month-year-current" data-month-year-label></span>
+            <span class="month-year-adjacent" data-month-year-next-label aria-hidden="true"></span>
+          </div>
           <button type="button" class="month-year-btn" data-month-year-next aria-label="Next year">›</button>
         </div>
-      </div>
-      <div class="month-strip" data-month-strip></div>
-      <p class="month-highlights-footnote">Have a photo of the Uplands you love? <a href="#submit-a-photo">Submit it</a> to be featured next — or <a href="assets/images/picture-of-the-month-qr.png" download="uplands-picture-of-the-month-qr.png">download the QR code</a> that always links here.</p>
-    </section>
 
-    <div class="gallery-grid">
+        <div class="month-strip" data-month-strip></div>
+      </section>
+
+      <div class="gallery-grid">
       <a class="gallery-item" href="assets/images/gallery/370200587_870606807759681_210162988387038657_n.jpg">
         <img src="assets/images/gallery/370200587_870606807759681_210162988387038657_n.jpg" alt="Uplands neighborhood photograph 1">
       </a>
@@ -153,7 +159,8 @@
       <a class="gallery-item" href="assets/images/gallery/sunset-waves.jpg">
         <img src="assets/images/gallery/sunset-waves.jpg" alt="Uplands neighborhood photograph 31">
       </a>
-    </div>
+      </div>
+    </section>
 
     <section class="photo-submit-section" id="submit-a-photo" aria-labelledby="submit-a-photo-title">
       <div class="section-heading">
